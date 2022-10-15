@@ -1,8 +1,3 @@
-using VectorLib;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Newtonsoft.Json;
-using VectorLibTest;
-
 namespace VectorLibTest
 {
     [TestClass]
