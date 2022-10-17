@@ -1,4 +1,5 @@
-﻿using System;
+﻿using _3DVectorMath.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace _3DVectorMath
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            e.Handled = !Constants.NumberValidationRegex.IsMatch(e.Text);
         }
     }
 }

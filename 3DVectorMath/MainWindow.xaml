@@ -3,10 +3,50 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:_3DVectorMath"
+        xmlns:local="clr-namespace:_3DVectorMath.ViewModel"
+        xmlns:enums="clr-namespace:_3DVectorMath.Enums"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
-    <Grid>
+    <Window.DataContext>
+        <local:MainViewModel/>
+    </Window.DataContext>
 
+
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Row="1">
+            <GroupBox Header="Vector 1" Margin="0,10">
+                <StackPanel>
+                    <TextBox Text="{Binding X1}" TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"/>
+                    <TextBox Text="{Binding Y1}" TextAlignment="Center"/>
+                    <TextBox Text="{Binding Z1}" TextAlignment="Center"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="Vector 2" Margin="0,10">
+                <StackPanel>
+                    <TextBox Text="{Binding X2}" TextAlignment="Center"/>
+                    <TextBox Text="{Binding Y2}" TextAlignment="Center"/>
+                    <TextBox Text="{Binding Z2}" TextAlignment="Center"/>
+                </StackPanel>
+            </GroupBox>
+            
+            <GroupBox Header="Result" Margin="0,10">
+                <StackPanel>
+                    <TextBox Text="{Binding Xr, Mode=OneWay}" IsReadOnly="True" Background="LightGray" TextAlignment="Center"/>
+                    <TextBox Text="{Binding Yr, Mode=OneWay}" IsReadOnly="True" Background="LightGray" TextAlignment="Center"/>
+                    <TextBox Text="{Binding Zr, Mode=OneWay}" IsReadOnly="True" Background="LightGray" TextAlignment="Center"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
     </Grid>
 </Window>

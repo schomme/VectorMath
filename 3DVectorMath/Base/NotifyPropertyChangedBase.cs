@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace _3DVectorMath.Base
 {
-    public class NotifyPropertyChangedBase : INotifyPropertyChanged
+    public abstract class NotifyPropertyChangedBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler? PropertyChanged;
 
