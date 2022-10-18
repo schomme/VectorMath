@@ -3,12 +3,23 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:_3DVectorMath.ViewModel"
+        xmlns:helix="http://helix-toolkit.org/wpf"
         mc:Ignorable="d"
         Title="MainWindow" Height="400  " Width="600">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
+    <Window.Resources>
+        <Color x:Key="FirstVectorColor">Green</Color>
+        <SolidColorBrush x:Key="FirstVectorBrush" Color="{StaticResource FirstVectorColor}"/>
+        <Color x:Key="SecondVectorColor">Blue</Color>
+        <SolidColorBrush x:Key="SecondVectorBrush" Color="{StaticResource SecondVectorColor}"/>
+        <Color x:Key="ResultVectorColor">Darkorange</Color>
+        <SolidColorBrush x:Key="ResultVectorBrush" Color="{StaticResource ResultVectorColor}"/>
+        <system:String x:Key="DecimalStringFormat">{0:0.###}</system:String>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
@@ -21,44 +32,51 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="0" CanVerticallyScroll="True">
-            <GroupBox Header="Vector 1" Margin="0,10">
+            <GroupBox Header="Vector 1" Margin="0,10" BorderBrush="{StaticResource FirstVectorBrush}">
                 <StackPanel>
                     <TextBox Text="{Binding X1}" Style="{StaticResource TextBox_Input}"/>
                     <TextBox Text="{Binding Y1}" Style="{StaticResource TextBox_Input}"/>
                     <TextBox Text="{Binding Z1}" Style="{StaticResource TextBox_Input}"/>
                     <Label Content="Length"/>
-                    <TextBox Text="{Binding FirstVector.Length, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding FirstVector.Length, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                 </StackPanel>
             </GroupBox>
-            <GroupBox Header="Vector 2" Margin="0,10">
+            <GroupBox Header="Vector 2" Margin="0,10" BorderBrush="{StaticResource SecondVectorBrush}">
                 <StackPanel>
                     <TextBox Text="{Binding X2}" Style="{StaticResource TextBox_Input}"/>
                     <TextBox Text="{Binding Y2}" Style="{StaticResource TextBox_Input}"/>
                     <TextBox Text="{Binding Z2}" Style="{StaticResource TextBox_Input}"/>
                     <Label Content="Length"/>
-                    <TextBox Text="{Binding SecondVector.Length, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding SecondVector.Length, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                 </StackPanel>
             </GroupBox>
             <TextBlock Text="CalcMode"/>
             <ComboBox ItemsSource="{Binding CalculationsModes}" DisplayMemberPath="Key" SelectedItem="{Binding CalcSelection}"/>
         </StackPanel>
         <StackPanel Grid.Column="3" Grid.Row="1">
-            <GroupBox Header="Result" Margin="0,10" x:Name="GrpResult">
+            <GroupBox Header="Result" Margin="0,10" x:Name="GrpResult" BorderBrush="{StaticResource ResultVectorBrush}">
                 <StackPanel>
-                    <TextBox Text="{Binding ResultVector.X, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
-                    <TextBox Text="{Binding ResultVector.Y, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
-                    <TextBox Text="{Binding ResultVector.Z, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ResultVector.X, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ResultVector.Y, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ResultVector.Z, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                     <Separator Margin="0,10"/>
                     <Label Content="Length"/>
-                    <TextBox Text="{Binding ResultVector.Length, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ResultVector.Length, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                     <Label Content="Angle Radians"/>
-                    <TextBox Text="{Binding Angle, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding Angle, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                     <Label Content="Angle Degrees"/>
-                    <TextBox Text="{Binding AngleDegress, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding AngleDegress, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                     <Label Content="Scalar"/>
-                    <TextBox Text="{Binding ScalarProduct, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ScalarProduct, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
+        <helix:HelixViewport3D Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="2" Margin="5">
+            <helix:DefaultLights/>
+            <helix:CoordinateSystemVisual3D/>
+            <helix:LinesVisual3D Points="{Binding FirstVector, Converter={StaticResource PointCollectionConverter}}" Color="{StaticResource FirstVectorColor}" Thickness="2"/>
+            <helix:LinesVisual3D Points="{Binding SecondVector, Converter={StaticResource PointCollectionConverter}}" Color="{StaticResource SecondVectorColor}" Thickness="2"/>
+            <helix:LinesVisual3D Points="{Binding ResultVector, Converter={StaticResource PointCollectionConverter}}" Color="{StaticResource ResultVectorColor}" Thickness="2"/>
+        </helix:HelixViewport3D>
     </Grid>
 </Window>

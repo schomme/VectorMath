@@ -88,6 +88,7 @@ namespace _3DVectorMath.ViewModel
                     _FirstVector.X = value;
                     UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.FirstVector));
                     this.NotifyInternProperies();                   
                 }
             }
