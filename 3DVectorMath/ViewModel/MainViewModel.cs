@@ -1,11 +1,7 @@
 ﻿using _3DVectorMath.Base;
-using _3DVectorMath.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
 using VectorLib;
 
 namespace _3DVectorMath.ViewModel
@@ -16,10 +12,18 @@ namespace _3DVectorMath.ViewModel
         private Vector _SecondVector = new Vector();
         private Vector _ResultVector = new Vector();
        
-        private CalcMode _calcMode;
-        
+        public readonly Dictionary<string, Func<Vector, Vector, Vector>> Calculations = new Dictionary<string, Func<Vector, Vector, Vector>>() { 
+            { "Add", VectorExtensions.Add },
+            { "Substract", VectorExtensions.Subtract },
+            { "CrossProduct", VectorExtensions.CrossProduct },
+        };
+        private KeyValuePair<string, Func<Vector, Vector, Vector>> _CalcSelection;
 
-        public MainViewModel() {}
+
+        public MainViewModel()
+        {
+            _CalcSelection = Calculations.First();
+        }
 
 
         public Vector FirstVector
@@ -66,9 +70,7 @@ namespace _3DVectorMath.ViewModel
                 {
                     _ResultVector = value;
                     OnPropertyRaised();
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
-
+                    this.NotifyInternProperies();
                 }
             }
         }
@@ -86,9 +88,7 @@ namespace _3DVectorMath.ViewModel
                     _FirstVector.X = value;
                     UpdateResultVector();
                     OnPropertyRaised();
-                    OnPropertyRaised(nameof(this.FirstVector));
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
+                    this.NotifyInternProperies();                   
                 }
             }
         }
@@ -106,8 +106,7 @@ namespace _3DVectorMath.ViewModel
                     UpdateResultVector();
                     OnPropertyRaised();
                     OnPropertyRaised(nameof(this.FirstVector));
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
+                    this.NotifyInternProperies();
                 }
             }
         }
@@ -125,8 +124,7 @@ namespace _3DVectorMath.ViewModel
                     UpdateResultVector();
                     OnPropertyRaised();
                     OnPropertyRaised(nameof(this.FirstVector));
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
+                    this.NotifyInternProperies();
                 }
             }
         }
@@ -144,8 +142,7 @@ namespace _3DVectorMath.ViewModel
                     UpdateResultVector();
                     OnPropertyRaised();
                     OnPropertyRaised(nameof(this.SecondVector));
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
+                    this.NotifyInternProperies();
                 }
             }
         }
@@ -163,8 +160,7 @@ namespace _3DVectorMath.ViewModel
                     UpdateResultVector();
                     OnPropertyRaised();
                     OnPropertyRaised(nameof(this.SecondVector));
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
+                    this.NotifyInternProperies();
                 }
             }
         }
@@ -182,27 +178,12 @@ namespace _3DVectorMath.ViewModel
                     UpdateResultVector();
                     OnPropertyRaised();
                     OnPropertyRaised(nameof(this.SecondVector));
-                    OnPropertyRaised(nameof(this.Angle));
-                    OnPropertyRaised(nameof(this.AngleDegress));
+                    this.NotifyInternProperies();
                 }
             }
         }
 
-        public CalcMode CalcMode
-        {
-            get
-            {
-                return _calcMode;
-            }
-            set
-            {
-                if (value != _calcMode)
-                {
-                    _calcMode = value;
-                    OnPropertyRaised();
-                }
-            }
-        }
+        public Dictionary<string, Func<Vector, Vector, Vector>> CalculationsModes => Calculations;
         public double Angle 
         {
             get
@@ -221,12 +202,41 @@ namespace _3DVectorMath.ViewModel
                 return this.FirstVector.AngleBetween(this.SecondVector, true);
             }
         }
+        public double ScalarProduct
+        {
+            get
+            {
+                return this.FirstVector.ScalarProduct(this.SecondVector);
+            }
+        }
+        public KeyValuePair<string, Func<Vector, Vector, Vector>> CalcSelection
+        {
+            get
+            {
+                return this._CalcSelection;
+            }
+            set
+            {
+                if (value.Key != _CalcSelection.Key)
+                {
+                    _CalcSelection = value;
+                    UpdateResultVector();
+                    OnPropertyRaised();
+                }
+            }
+        }
         private void UpdateResultVector()
         {
             if (this.FirstVector is null || this.SecondVector is null) return;
 
-            this.ResultVector = this.FirstVector.Add(SecondVector);
+            this.ResultVector = this.CalcSelection.Value.Invoke(this.FirstVector, this.SecondVector);
         }
 
+        private void NotifyInternProperies()
+        {
+            OnPropertyRaised(nameof(this.Angle));
+            OnPropertyRaised(nameof(this.AngleDegress));
+            OnPropertyRaised(nameof(this.ScalarProduct));
+        }
     }
 }

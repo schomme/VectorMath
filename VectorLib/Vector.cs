@@ -18,61 +18,6 @@
         }
         public Vector() : this(0, 0, 0) {}
 
-        #region Methods
-
-        public Vector Negate()
-        {
-            return new Vector(-this.X, -this.Y, -this.Z).Negate();
-        }
-
-        public Vector Add(Vector v)
-        {
-            return new Vector(
-                this.X + v.X,
-                this.Y + v.Y,
-                this.Z + v.Z
-            );
-        }
-        public Vector Subtract(Vector v)
-        {
-            return new Vector(
-                this.X - v.X,
-                this.Y - v.Y,
-                this.Z - v.Z
-            );
-        }
-        public Vector Multiply(double faktor)
-        {
-            return new Vector(
-                this.X * faktor,
-                this.Y * faktor,
-                this.Z * faktor
-            );
-        }
-        public Vector Divide(double quotient)
-        {
-            return new Vector(
-                this.X / quotient,
-                this.Y / quotient,
-                this.Z / quotient
-            );
-        }
-        public double ScalarProduct(Vector v)
-        {
-            return this.X * v.X + this.Y * v.Y + this.Z * v.Z;
-        }
-        public Vector CrossProduct(Vector v)
-        {
-            return new Vector(this.Y * v.Z - this.Z * v.Y, this.Z * v.X - this.X * v.Z, this.X * v.Y - this.Y * v.X);
-        }
-        public double AngleBetween(Vector v, bool inDegrees = false)
-        {
-            var radians = Math.Acos(this.ScalarProduct(v) / (this.Length * v.Length));
-            return inDegrees ? radians * 180 / Math.PI : radians;
-        }
-
-        #endregion
-
         #region Overrides
 
         public override bool Equals(object? obj)
