@@ -1,8 +1,4 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
-using System.Diagnostics.CodeAnalysis;
-
-namespace VectorLib
+﻿namespace VectorLib
 {
     public class Vector : IEquatable<Vector>
     {
@@ -24,36 +20,42 @@ namespace VectorLib
 
         #region Methods
 
-        public void Negate()
+        public Vector Negate()
         {
-            this.X *= -1;
-            this.Y *= -1;
-            this.Z *= -1;
+            return new Vector(-this.X, -this.Y, -this.Z).Negate();
         }
 
-        public void Add(Vector v)
+        public Vector Add(Vector v)
         {
-            this.X += v.X;
-            this.Y += v.Y;
-            this.Z += v.Z;
+            return new Vector(
+                this.X + v.X,
+                this.Y + v.Y,
+                this.Z + v.Z
+            );
         }
-        public void Subtract(Vector v)
+        public Vector Subtract(Vector v)
         {
-            this.X -= v.X;
-            this.Y -= v.Y;
-            this.Z -= v.Z;
+            return new Vector(
+                this.X - v.X,
+                this.Y - v.Y,
+                this.Z - v.Z
+            );
         }
-        public void Multiply(double faktor)
+        public Vector Multiply(double faktor)
         {
-            this.X *= faktor;
-            this.Y *= faktor;
-            this.Z *= faktor;
+            return new Vector(
+                this.X * faktor,
+                this.Y * faktor,
+                this.Z * faktor
+            );
         }
-        public void Divide(double quotient)
+        public Vector Divide(double quotient)
         {
-            this.X /= quotient;
-            this.Y /= quotient;
-            this.Z /= quotient;
+            return new Vector(
+                this.X / quotient,
+                this.Y / quotient,
+                this.Z / quotient
+            );
         }
         public double ScalarProduct(Vector v)
         {

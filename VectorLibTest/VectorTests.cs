@@ -39,8 +39,8 @@ namespace VectorLibTest
         [DynamicData(nameof(TestDatas), DynamicDataSourceType.Property)]
         public void NegateVector(TestData o)
         {
-            var v = new Vector(o.X1, o.Y1, o.Z1);
-            v.Negate();
+            var v = new Vector(o.X1, o.Y1, o.Z1).Negate();
+
             Assert.AreEqual(-o.X1, v.X);
             Assert.AreEqual(-o.Y1, v.Y);
             Assert.AreEqual(-o.Z1, v.Z);
@@ -53,11 +53,11 @@ namespace VectorLibTest
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
             var v2 = new Vector(o.X2, o.Y2, o.Z2);
 
-            v1.Add(v2);
+            var r = v1.Add(v2);
 
-            Assert.AreEqual(o.SumX, v1.X);
-            Assert.AreEqual(o.SumY, v1.Y);
-            Assert.AreEqual(o.SumZ, v1.Z);
+            Assert.AreEqual(o.SumX, r.X);
+            Assert.AreEqual(o.SumY, r.Y);
+            Assert.AreEqual(o.SumZ, r.Z);
         }
 
         [TestMethod]
@@ -68,14 +68,15 @@ namespace VectorLibTest
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
             var v2 = new Vector(o.X2, o.Y2, o.Z2);
 
-            v1.Subtract(v2);
+            var r = v1.Subtract(v2);
 
             Assert.IsNotNull(v1);
             Assert.IsNotNull(v2);
+            Assert.IsNotNull(r);
 
-            Assert.AreEqual(o.DiffX, v1.X);
-            Assert.AreEqual(o.DiffY, v1.Y);
-            Assert.AreEqual(o.DiffZ, v1.Z);
+            Assert.AreEqual(o.DiffX, r.X);
+            Assert.AreEqual(o.DiffY, r.Y);
+            Assert.AreEqual(o.DiffZ, r.Z);
         }
 
         [TestMethod]
@@ -83,11 +84,11 @@ namespace VectorLibTest
         public void MultiplyVector(TestData o)
         {
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
-            v1.Multiply(o.FAKTOR);
+            var r = v1.Multiply(o.FAKTOR);
 
-            Assert.AreEqual(o.MultX, v1.X);
-            Assert.AreEqual(o.MultY, v1.Y);
-            Assert.AreEqual(o.MultZ, v1.Z);
+            Assert.AreEqual(o.MultX, r.X);
+            Assert.AreEqual(o.MultY, r.Y);
+            Assert.AreEqual(o.MultZ, r.Z);
         }
 
         [TestMethod]
@@ -97,11 +98,11 @@ namespace VectorLibTest
         {
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
 
-            v1.Divide(o.QUOTIENT);
+            var r = v1.Divide(o.QUOTIENT);
 
-            Assert.AreEqual(o.DivX, v1.X, 8);
-            Assert.AreEqual(o.DivY, v1.Y, 8);
-            Assert.AreEqual(o.DivZ, v1.Z, 8);
+            Assert.AreEqual(o.DivX, r.X, 8);
+            Assert.AreEqual(o.DivY, r.Y, 8);
+            Assert.AreEqual(o.DivZ, r.Z, 8);
         }
 
         [TestMethod]
@@ -112,7 +113,7 @@ namespace VectorLibTest
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
             var v2 = new Vector(o.X2, o.Y2, o.Z2);
             
-            double scalar = v1.ScalarProduct(v2);
+            var scalar = v1.ScalarProduct(v2);
 
             Assert.AreEqual(o.ScalarProd, scalar);
         }

@@ -12,18 +12,14 @@ namespace _3DVectorMath.ViewModel
 {
     public class MainViewModel : NotifyPropertyChangedBase
     {
-        private Vector _FirstVector;
-        private Vector _SecondVector;
-        private Vector _ResultVector;
+        private Vector _FirstVector = new Vector();
+        private Vector _SecondVector = new Vector();
+        private Vector _ResultVector = new Vector();
+       
         private CalcMode _calcMode;
         
 
-        public MainViewModel()
-        {
-            this.FirstVector = new Vector();
-            this.SecondVector = new Vector();
-            this.ResultVector = new Vector();
-        }
+        public MainViewModel() {}
 
 
         public Vector FirstVector
@@ -37,6 +33,7 @@ namespace _3DVectorMath.ViewModel
                 if (value != _FirstVector)
                 {
                     _FirstVector = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
                 }
             }
@@ -52,11 +49,11 @@ namespace _3DVectorMath.ViewModel
                 if (value != _SecondVector)
                 {
                     _SecondVector = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
                 }
             }
         }
-
         public Vector ResultVector
         {
             get
@@ -69,6 +66,9 @@ namespace _3DVectorMath.ViewModel
                 {
                     _ResultVector = value;
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
+
                 }
             }
         }
@@ -84,11 +84,14 @@ namespace _3DVectorMath.ViewModel
                 if (value != FirstVector.X)
                 {
                     _FirstVector.X = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.FirstVector));
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
                 }
             }
         }
-
         public double Y1
         {
             get
@@ -100,11 +103,14 @@ namespace _3DVectorMath.ViewModel
                 if (value != FirstVector.Y)
                 {
                     _FirstVector.Y = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.FirstVector));
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
                 }
             }
         }
-
         public double Z1
         {
             get
@@ -116,11 +122,14 @@ namespace _3DVectorMath.ViewModel
                 if (value != FirstVector.Z)
                 {
                     _FirstVector.Z = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.FirstVector));
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
                 }
             }
         }
-
         public double X2
         {
             get
@@ -132,11 +141,14 @@ namespace _3DVectorMath.ViewModel
                 if (value != SecondVector.X)
                 {
                     _SecondVector.X = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.SecondVector));
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
                 }
             }
         }
-
         public double Y2
         {
             get
@@ -148,11 +160,14 @@ namespace _3DVectorMath.ViewModel
                 if (value != SecondVector.Y)
                 {
                     _SecondVector.Y = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.SecondVector));
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
                 }
             }
         }
-
         public double Z2
         {
             get
@@ -164,55 +179,11 @@ namespace _3DVectorMath.ViewModel
                 if (value != SecondVector.Z)
                 {
                     _SecondVector.Z = value;
+                    UpdateResultVector();
                     OnPropertyRaised();
-                }
-            }
-        }
-
-        public double Xr
-        {
-            get
-            {
-                return ResultVector.X;
-            }
-            private set
-            {
-                if (value != ResultVector.X)
-                {
-                    _ResultVector.X = value;
-                    OnPropertyRaised();
-                }
-            }
-        }
-
-        public double Yr
-        {
-            get
-            {
-                return ResultVector.Y;
-            }
-            private set
-            {
-                if (value != ResultVector.Y)
-                {
-                    _ResultVector.Y = value;
-                    OnPropertyRaised();
-                }
-            }
-        }
-
-        public double Zr
-        {
-            get
-            {
-                return ResultVector.Z;
-            }
-            private set
-            {
-                if (value != ResultVector.Z)
-                {
-                    _ResultVector.Z = value;
-                    OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.SecondVector));
+                    OnPropertyRaised(nameof(this.Angle));
+                    OnPropertyRaised(nameof(this.AngleDegress));
                 }
             }
         }
@@ -232,5 +203,30 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+        public double Angle 
+        {
+            get
+            {
+                if (this.FirstVector == null || this.SecondVector == null) return 0d;
+                if (this.FirstVector.Length == 0 || this.SecondVector.Length == 0) return 0d;
+                return this.FirstVector.AngleBetween(this.SecondVector);
+            }
+        }
+        public double AngleDegress
+        {
+            get
+            {
+                if (this.FirstVector == null || this.SecondVector == null) return 0d;
+                if (this.FirstVector.Length == 0 || this.SecondVector.Length == 0) return 0d;
+                return this.FirstVector.AngleBetween(this.SecondVector, true);
+            }
+        }
+        private void UpdateResultVector()
+        {
+            if (this.FirstVector is null || this.SecondVector is null) return;
+
+            this.ResultVector = this.FirstVector.Add(SecondVector);
+        }
+
     }
 }

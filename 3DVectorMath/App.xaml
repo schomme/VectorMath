@@ -4,6 +4,13 @@
              xmlns:local="clr-namespace:_3DVectorMath"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="TextBox_readonly" TargetType="TextBox">
+            <Setter Property="IsReadOnly" Value="True"/>
+            <Setter Property="Background" Value="LightGray"/>
+        </Style>
+        <Style x:Key="TextBox_Input" TargetType="TextBox">
+            <Setter Property="TextAlignment" Value="Center"/>
+            <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput" />
+        </Style>
     </Application.Resources>
 </Application>

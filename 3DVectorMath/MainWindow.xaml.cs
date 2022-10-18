@@ -25,10 +25,5 @@ namespace _3DVectorMath
         {
             InitializeComponent();
         }
-
-        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
-        {
-            e.Handled = !Constants.NumberValidationRegex.IsMatch(e.Text);
-        }
     }
 }

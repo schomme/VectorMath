@@ -4,18 +4,14 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:_3DVectorMath.ViewModel"
-        xmlns:enums="clr-namespace:_3DVectorMath.Enums"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="800" Width="800">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
-
-
-
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="auto" />
+            <ColumnDefinition Width="100" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
@@ -24,27 +20,38 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Grid.Column="0" CanVerticallyScroll="True">
             <GroupBox Header="Vector 1" Margin="0,10">
                 <StackPanel>
-                    <TextBox Text="{Binding X1}" TextAlignment="Center" PreviewTextInput="TextBox_PreviewTextInput"/>
-                    <TextBox Text="{Binding Y1}" TextAlignment="Center"/>
-                    <TextBox Text="{Binding Z1}" TextAlignment="Center"/>
+                    <TextBox Text="{Binding X1}" Style="{StaticResource TextBox_Input}"/>
+                    <TextBox Text="{Binding Y1}" Style="{StaticResource TextBox_Input}"/>
+                    <TextBox Text="{Binding Z1}" Style="{StaticResource TextBox_Input}"/>
+                    <Label Content="Length"/>
+                    <TextBox Text="{Binding FirstVector.Length, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
                 </StackPanel>
             </GroupBox>
             <GroupBox Header="Vector 2" Margin="0,10">
                 <StackPanel>
-                    <TextBox Text="{Binding X2}" TextAlignment="Center"/>
-                    <TextBox Text="{Binding Y2}" TextAlignment="Center"/>
-                    <TextBox Text="{Binding Z2}" TextAlignment="Center"/>
+                    <TextBox Text="{Binding X2}" Style="{StaticResource TextBox_Input}"/>
+                    <TextBox Text="{Binding Y2}" Style="{StaticResource TextBox_Input}"/>
+                    <TextBox Text="{Binding Z2}" Style="{StaticResource TextBox_Input}"/>
+                    <Label Content="Length"/>
+                    <TextBox Text="{Binding SecondVector.Length, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
                 </StackPanel>
             </GroupBox>
             
-            <GroupBox Header="Result" Margin="0,10">
+            <GroupBox Header="Result" Margin="0,10" x:Name="GrpResult">
                 <StackPanel>
-                    <TextBox Text="{Binding Xr, Mode=OneWay}" IsReadOnly="True" Background="LightGray" TextAlignment="Center"/>
-                    <TextBox Text="{Binding Yr, Mode=OneWay}" IsReadOnly="True" Background="LightGray" TextAlignment="Center"/>
-                    <TextBox Text="{Binding Zr, Mode=OneWay}" IsReadOnly="True" Background="LightGray" TextAlignment="Center"/>
+                    <TextBox Text="{Binding ResultVector.X, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ResultVector.Y, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <TextBox Text="{Binding ResultVector.Z, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <Separator Margin="0,10"/>
+                    <Label Content="Length"/>
+                    <TextBox Text="{Binding ResultVector.Length, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <Label Content="Angle Radians"/>
+                    <TextBox Text="{Binding Angle, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
+                    <Label Content="Angle Degrees"/>
+                    <TextBox Text="{Binding AngleDegress, Mode=OneWay}" Style="{StaticResource TextBox_readonly}"/>
                 </StackPanel>
             </GroupBox>
         </StackPanel>
