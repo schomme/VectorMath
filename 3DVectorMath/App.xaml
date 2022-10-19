@@ -13,6 +13,6 @@
             <Setter Property="TextAlignment" Value="Center"/>
             <EventSetter Event="PreviewTextInput" Handler="TextBox_PreviewTextInput" />
         </Style>
-        <converter:PointCollectionConverter x:Key="PointCollectionConverter"/>
+        <converter:PointConverter x:Key="PointConverter"/>
     </Application.Resources>
 </Application>

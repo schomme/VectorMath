@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Windows.Input;
 using VectorLib;
 
 namespace _3DVectorMath.ViewModel
@@ -11,8 +12,10 @@ namespace _3DVectorMath.ViewModel
         private Vector _FirstVector = new Vector();
         private Vector _SecondVector = new Vector();
         private Vector _ResultVector = new Vector();
-       
-        public readonly Dictionary<string, Func<Vector, Vector, Vector>> Calculations = new Dictionary<string, Func<Vector, Vector, Vector>>() { 
+
+        private ICommand _negateVector;
+
+        public readonly Dictionary<string, Func<Vector, Vector, Vector>> Calculations = new Dictionary<string, Func<Vector, Vector, Vector>>() {
             { "Add", VectorExtensions.Add },
             { "Substract", VectorExtensions.Subtract },
             { "CrossProduct", VectorExtensions.CrossProduct },
@@ -39,6 +42,9 @@ namespace _3DVectorMath.ViewModel
                     _FirstVector = value;
                     UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.X1));
+                    OnPropertyRaised(nameof(this.Y1));
+                    OnPropertyRaised(nameof(this.Z1));
                 }
             }
         }
@@ -55,6 +61,9 @@ namespace _3DVectorMath.ViewModel
                     _SecondVector = value;
                     UpdateResultVector();
                     OnPropertyRaised();
+                    OnPropertyRaised(nameof(this.X2));
+                    OnPropertyRaised(nameof(this.Y2));
+                    OnPropertyRaised(nameof(this.Z2));
                 }
             }
         }
@@ -89,7 +98,7 @@ namespace _3DVectorMath.ViewModel
                     UpdateResultVector();
                     OnPropertyRaised();
                     OnPropertyRaised(nameof(this.FirstVector));
-                    this.NotifyInternProperies();                   
+                    this.NotifyInternProperies();
                 }
             }
         }
@@ -185,7 +194,7 @@ namespace _3DVectorMath.ViewModel
         }
 
         public Dictionary<string, Func<Vector, Vector, Vector>> CalculationsModes => Calculations;
-        public double Angle 
+        public double Angle
         {
             get
             {
@@ -208,6 +217,17 @@ namespace _3DVectorMath.ViewModel
             get
             {
                 return this.FirstVector.ScalarProduct(this.SecondVector);
+            }
+        }
+
+        public double ArrowDiameter
+        {
+            get
+            {
+                if (FirstVector.Length == 0d && SecondVector.Length == 0d && ResultVector.Length == 0d) return 1d;
+
+                return new[] { FirstVector.Length, SecondVector.Length, ResultVector.Length }.Where(i => i > 0).Min() * 0.1d;
+
             }
         }
         public KeyValuePair<string, Func<Vector, Vector, Vector>> CalcSelection
@@ -238,6 +258,19 @@ namespace _3DVectorMath.ViewModel
             OnPropertyRaised(nameof(this.Angle));
             OnPropertyRaised(nameof(this.AngleDegress));
             OnPropertyRaised(nameof(this.ScalarProduct));
+            OnPropertyRaised(nameof(this.ArrowDiameter));
+        }
+
+        public ICommand NegateVector { 
+            get 
+            {
+                return _negateVector ?? (_negateVector = new CommandHandler((p) => {
+
+                    if (p == FirstVector) FirstVector = p.Negate();
+                    else if(p == SecondVector) SecondVector = p.Negate();
+                    else if (p == ResultVector) ResultVector = p.Negate();
+                }, true));
+            } 
         }
     }
 }

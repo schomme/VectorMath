@@ -7,19 +7,27 @@
         xmlns:local="clr-namespace:_3DVectorMath.ViewModel"
         xmlns:helix="http://helix-toolkit.org/wpf"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400  " Width="600">
+        Title="MainWindow" Height="600" Width="600">
     <Window.DataContext>
         <local:MainViewModel/>
     </Window.DataContext>
+    
+    <!--===================================
+                Static Ressources       
+    ===================================--> 
     <Window.Resources>
-        <Color x:Key="FirstVectorColor">Green</Color>
+        <Color x:Key="FirstVectorColor">red</Color>
         <SolidColorBrush x:Key="FirstVectorBrush" Color="{StaticResource FirstVectorColor}"/>
         <Color x:Key="SecondVectorColor">Blue</Color>
         <SolidColorBrush x:Key="SecondVectorBrush" Color="{StaticResource SecondVectorColor}"/>
-        <Color x:Key="ResultVectorColor">Darkorange</Color>
+        <Color x:Key="ResultVectorColor">darkgreen</Color>
         <SolidColorBrush x:Key="ResultVectorBrush" Color="{StaticResource ResultVectorColor}"/>
         <system:String x:Key="DecimalStringFormat">{0:0.###}</system:String>
     </Window.Resources>
+
+    <!--===================================
+                UI Elements       
+    ===================================-->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="100" />
@@ -29,9 +37,12 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="auto"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <StackPanel Grid.Row="1" Grid.Column="0" CanVerticallyScroll="True">
+    <!--===================================
+                First Vector       
+    ===================================-->
             <GroupBox Header="Vector 1" Margin="0,10" BorderBrush="{StaticResource FirstVectorBrush}">
                 <StackPanel>
                     <TextBox Text="{Binding X1}" Style="{StaticResource TextBox_Input}"/>
@@ -39,8 +50,12 @@
                     <TextBox Text="{Binding Z1}" Style="{StaticResource TextBox_Input}"/>
                     <Label Content="Length"/>
                     <TextBox Text="{Binding FirstVector.Length, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
+                    <Button Content="Negate" Margin="0,10" Command="{Binding NegateVector}" CommandParameter="{Binding FirstVector}" />
                 </StackPanel>
             </GroupBox>
+    <!--===================================
+                Second Vector       
+    ===================================-->
             <GroupBox Header="Vector 2" Margin="0,10" BorderBrush="{StaticResource SecondVectorBrush}">
                 <StackPanel>
                     <TextBox Text="{Binding X2}" Style="{StaticResource TextBox_Input}"/>
@@ -48,11 +63,15 @@
                     <TextBox Text="{Binding Z2}" Style="{StaticResource TextBox_Input}"/>
                     <Label Content="Length"/>
                     <TextBox Text="{Binding SecondVector.Length, Mode=OneWay, StringFormat={StaticResource DecimalStringFormat}}" Style="{StaticResource TextBox_readonly}"/>
+                    <Button Content="Negate" Margin="0,10" Command="{Binding NegateVector}" CommandParameter="{Binding SecondVector}" />
                 </StackPanel>
             </GroupBox>
             <TextBlock Text="CalcMode"/>
             <ComboBox ItemsSource="{Binding CalculationsModes}" DisplayMemberPath="Key" SelectedItem="{Binding CalcSelection}"/>
         </StackPanel>
+     <!--===================================
+                Result      
+    ===================================-->
         <StackPanel Grid.Column="3" Grid.Row="1">
             <GroupBox Header="Result" Margin="0,10" x:Name="GrpResult" BorderBrush="{StaticResource ResultVectorBrush}">
                 <StackPanel>
@@ -71,12 +90,15 @@
                 </StackPanel>
             </GroupBox>
         </StackPanel>
-        <helix:HelixViewport3D Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="2" Margin="5">
+    <!--===================================
+                3D Vector View      
+    ===================================-->
+        <helix:HelixViewport3D Grid.Column="1" Grid.Row="1" BorderBrush="Gray" BorderThickness="2" Margin="5" ChangeFieldOfViewCursor="ScrollNS" PanCursor="Hand" RotateCursor="SizeAll" ZoomCursor="SizeNS" ZoomRectangleCursor="ScrollSE">
             <helix:DefaultLights/>
             <helix:CoordinateSystemVisual3D/>
-            <helix:LinesVisual3D Points="{Binding FirstVector, Converter={StaticResource PointCollectionConverter}}" Color="{StaticResource FirstVectorColor}" Thickness="2"/>
-            <helix:LinesVisual3D Points="{Binding SecondVector, Converter={StaticResource PointCollectionConverter}}" Color="{StaticResource SecondVectorColor}" Thickness="2"/>
-            <helix:LinesVisual3D Points="{Binding ResultVector, Converter={StaticResource PointCollectionConverter}}" Color="{StaticResource ResultVectorColor}" Thickness="2"/>
+            <helix:ArrowVisual3D Origin="0,0,0" Point1="0,0,0" Point2="{Binding FirstVector, Converter={StaticResource PointConverter}}" Fill="{StaticResource FirstVectorBrush}" Diameter="{Binding ArrowDiameter}" />
+            <helix:ArrowVisual3D Origin="0,0,0" Point1="0,0,0" Point2="{Binding SecondVector, Converter={StaticResource PointConverter}}" Fill="{StaticResource SecondVectorBrush}" Diameter="{Binding ArrowDiameter}" />
+            <helix:ArrowVisual3D Origin="0,0,0" Point1="0,0,0" Point2="{Binding ResultVector, Converter={StaticResource PointConverter}}" Fill="{StaticResource ResultVectorBrush}" Diameter="{Binding ArrowDiameter}" />
         </helix:HelixViewport3D>
     </Grid>
 </Window>
