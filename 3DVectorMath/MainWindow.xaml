@@ -66,8 +66,15 @@
                     <Button Content="Negate" Margin="0,10" Command="{Binding NegateVector}" CommandParameter="{Binding SecondVector}" />
                 </StackPanel>
             </GroupBox>
+    <!--===================================
+                Calc Options      
+    ===================================-->
             <TextBlock Text="CalcMode"/>
             <ComboBox ItemsSource="{Binding CalculationsModes}" DisplayMemberPath="Key" SelectedItem="{Binding CalcSelection}"/>
+            <TextBlock Text="Faktor" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding Faktor}" Style="{StaticResource TextBox_Input}"/>
+            <TextBlock Text="Quotient" Margin="0,10,0,0"/>
+            <TextBox Text="{Binding Quotient}" Style="{StaticResource TextBox_Input}"/>
         </StackPanel>
      <!--===================================
                 Result      

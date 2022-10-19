@@ -14,6 +14,8 @@ namespace _3DVectorMath.ViewModel
         private Vector _ResultVector = new Vector();
 
         private ICommand _negateVector;
+        private double _Faktor = 1;
+        private double _Quotient = 1;
 
         public readonly Dictionary<string, Func<Vector, Vector, Vector>> Calculations = new Dictionary<string, Func<Vector, Vector, Vector>>() {
             { "Add", VectorExtensions.Add },
@@ -246,11 +248,49 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        public double Faktor
+        {
+            get
+            {
+                return _Faktor;
+            }
+            set
+            {
+                if (value != _Faktor)
+                {
+                    _Faktor = value;
+                    UpdateResultVector();
+                    OnPropertyRaised();
+                }
+            }
+        }
+        public double Quotient
+        {
+            get
+            {
+                return _Quotient;
+            }
+            set
+            {
+                if (value != _Quotient)
+                {
+                    _Quotient = value;
+                    UpdateResultVector();
+                    OnPropertyRaised();
+                }
+            }
+        }
         private void UpdateResultVector()
         {
             if (this.FirstVector is null || this.SecondVector is null) return;
+            var v = this.CalcSelection.Value.Invoke(this.FirstVector, this.SecondVector);
 
-            this.ResultVector = this.CalcSelection.Value.Invoke(this.FirstVector, this.SecondVector);
+            v = v.Multiply(Faktor);
+
+            if(this.Quotient != 0) v = v.Divide(this.Quotient);
+
+            this.ResultVector = v;
         }
 
         private void NotifyInternProperies()
