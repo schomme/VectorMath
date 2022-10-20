@@ -9,6 +9,8 @@ namespace _3DVectorMath.ViewModel
 {
     public class MainViewModel : NotifyPropertyChangedBase
     {
+        #region Fields
+
         private Vector _FirstVector = new Vector();
         private Vector _SecondVector = new Vector();
         private Vector _ResultVector = new Vector();
@@ -24,13 +26,21 @@ namespace _3DVectorMath.ViewModel
         };
         private KeyValuePair<string, Func<Vector, Vector, Vector>> _CalcSelection;
 
+        #endregion
 
+        #region Construtor
         public MainViewModel()
         {
-            _CalcSelection = Calculations.First();
+            _CalcSelection = Calculations.Last();
         }
 
+        #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// First Vector
+        /// </summary>
         public Vector FirstVector
         {
             get
@@ -50,6 +60,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Second Vector
+        /// </summary>
         public Vector SecondVector
         {
             get
@@ -69,6 +83,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// The ResultVector of the First and Second Vector
+        /// </summary>
         public Vector ResultVector
         {
             get
@@ -86,6 +104,9 @@ namespace _3DVectorMath.ViewModel
             }
         }
 
+        /// <summary>
+        /// X-Component of the First Vector
+        /// </summary>
         public double X1
         {
             get
@@ -104,6 +125,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Y-Component of the First Vector
+        /// </summary>
         public double Y1
         {
             get
@@ -122,6 +147,9 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+        /// <summary>
+        /// Z-Component of the First Vector
+        /// </summary>
         public double Z1
         {
             get
@@ -140,6 +168,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// X-Component of the Second Vector
+        /// </summary>
         public double X2
         {
             get
@@ -158,6 +190,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Y-Component of the Second Vector
+        /// </summary>
         public double Y2
         {
             get
@@ -176,6 +212,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// Z-Component of the Second Vector
+        /// </summary>
         public double Z2
         {
             get
@@ -195,7 +235,14 @@ namespace _3DVectorMath.ViewModel
             }
         }
 
+        /// <summary>
+        /// Dictionary to the Calculation options
+        /// </summary>
         public Dictionary<string, Func<Vector, Vector, Vector>> CalculationsModes => Calculations;
+
+        /// <summary>
+        /// Angle between the Vectors in radians
+        /// </summary>
         public double Angle
         {
             get
@@ -205,6 +252,10 @@ namespace _3DVectorMath.ViewModel
                 return this.FirstVector.AngleBetween(this.SecondVector);
             }
         }
+
+        /// <summary>
+        /// Angle between the Vectors in degrees
+        /// </summary>
         public double AngleDegress
         {
             get
@@ -214,6 +265,10 @@ namespace _3DVectorMath.ViewModel
                 return this.FirstVector.AngleBetween(this.SecondVector, true);
             }
         }
+
+        /// <summary>
+        /// The scalar product of the first and second Vector
+        /// </summary>
         public double ScalarProduct
         {
             get
@@ -222,6 +277,9 @@ namespace _3DVectorMath.ViewModel
             }
         }
 
+        /// <summary>
+        /// Calculates the diameter of the Arrow
+        /// </summary>
         public double ArrowDiameter
         {
             get
@@ -232,6 +290,10 @@ namespace _3DVectorMath.ViewModel
 
             }
         }
+
+        /// <summary>
+        /// The selected Calculation mode. Item of the Dictionary CalculationsModes
+        /// </summary>
         public KeyValuePair<string, Func<Vector, Vector, Vector>> CalcSelection
         {
             get
@@ -249,6 +311,9 @@ namespace _3DVectorMath.ViewModel
             }
         }
 
+        /// <summary>
+        /// The Factor to multiply the Resultvector
+        /// </summary>
         public double Faktor
         {
             get
@@ -265,6 +330,10 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        /// <summary>
+        /// The Quotient to divide the Resultvector
+        /// </summary>
         public double Quotient
         {
             get
@@ -281,6 +350,14 @@ namespace _3DVectorMath.ViewModel
                 }
             }
         }
+
+        #endregion
+
+        #region Methods
+
+        /// <summary>
+        /// Recalculates the ResultVector with the First and Second Vector and depends on the CalcSelection, Faktor and Quotient
+        /// </summary>
         private void UpdateResultVector()
         {
             if (this.FirstVector is null || this.SecondVector is null) return;
@@ -293,6 +370,9 @@ namespace _3DVectorMath.ViewModel
             this.ResultVector = v;
         }
 
+        /// <summary>
+        /// Raises the PropertyChanged Events of dependet properties
+        /// </summary>
         private void NotifyInternProperies()
         {
             OnPropertyRaised(nameof(this.Angle));
@@ -301,16 +381,24 @@ namespace _3DVectorMath.ViewModel
             OnPropertyRaised(nameof(this.ArrowDiameter));
         }
 
+        #endregion
+
+        #region Commands
+
+        /// <summary>
+        /// Command to negate the Vector
+        /// </summary>
         public ICommand NegateVector { 
             get 
             {
                 return _negateVector ?? (_negateVector = new VectorCommandHandler((p) => {
-
                     if (p == FirstVector) FirstVector = p.Negate();
                     else if(p == SecondVector) SecondVector = p.Negate();
                     else if (p == ResultVector) ResultVector = p.Negate();
                 }, true));
             } 
         }
+
+        #endregion
     }
 }

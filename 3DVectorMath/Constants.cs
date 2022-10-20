@@ -9,6 +9,9 @@ namespace _3DVectorMath
 {
     public static class Constants
     {
+        /// <summary>
+        /// Regex to validate that the input is a decimal
+        /// </summary>
         public static readonly Regex NumberValidationRegex = new Regex(@"^-?\d*\.?\d*?$");
     }
 }
