@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32825.248
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "3DVectorMath", "3DVectorMath\3DVectorMath.csproj", "{03DD16A7-B295-4177-86A5-E81751CC1D4A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorWPFDemo", "3DVectorMath\VectorWPFDemo.csproj", "{03DD16A7-B295-4177-86A5-E81751CC1D4A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorLib", "VectorLib\VectorLib.csproj", "{A315EF24-7DC8-4AE9-BE8C-3FDF7ACB127D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorLib", "VectorLib\VectorLib.csproj", "{A315EF24-7DC8-4AE9-BE8C-3FDF7ACB127D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VectorLibTest", "VectorLibTest\VectorLibTest.csproj", "{F43861B2-803E-437A-9BF9-394A72A078D4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VectorLibTest", "VectorLibTest\VectorLibTest.csproj", "{F43861B2-803E-437A-9BF9-394A72A078D4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
