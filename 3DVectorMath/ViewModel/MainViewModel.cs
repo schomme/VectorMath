@@ -304,7 +304,7 @@ namespace _3DVectorMath.ViewModel
         public ICommand NegateVector { 
             get 
             {
-                return _negateVector ?? (_negateVector = new CommandHandler((p) => {
+                return _negateVector ?? (_negateVector = new VectorCommandHandler((p) => {
 
                     if (p == FirstVector) FirstVector = p.Negate();
                     else if(p == SecondVector) SecondVector = p.Negate();

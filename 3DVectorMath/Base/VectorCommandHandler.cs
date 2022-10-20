@@ -4,11 +4,13 @@ using VectorLib;
 
 namespace _3DVectorMath.Base
 {
-    public class CommandHandler : ICommand
+    public class VectorCommandHandler : ICommand
     {
         private Action<Vector> _action;
         private bool _canExecute;
-        public CommandHandler(Action<Vector> action, bool canExecute)
+        public event EventHandler CanExecuteChanged;
+
+        public VectorCommandHandler(Action<Vector> action, bool canExecute)
         {
             _action = action;
             _canExecute = canExecute;
@@ -18,8 +20,6 @@ namespace _3DVectorMath.Base
         {
             return _canExecute;
         }
-
-        public event EventHandler CanExecuteChanged;
 
         public void Execute(object parameter)
         {
