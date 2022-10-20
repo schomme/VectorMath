@@ -17,8 +17,8 @@ namespace VectorLibTest
         public double X2 { get; set; }
         public double Y2 { get; set; }
         public double Z2 { get; set; }
-        public double FAKTOR { get; set; }
-        public double QUOTIENT { get; set; }
+        public double Faktor { get; set; }
+        public double Quotient { get; set; }
         public double SumX { get; set; }
         public double SumY { get; set; }
         public double SumZ { get; set; }

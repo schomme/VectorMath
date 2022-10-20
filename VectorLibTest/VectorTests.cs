@@ -84,7 +84,7 @@ namespace VectorLibTest
         public void MultiplyVector(TestData o)
         {
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
-            var r = v1.Multiply(o.FAKTOR);
+            var r = v1.Multiply(o.Faktor);
 
             Assert.AreEqual(o.MultX, r.X);
             Assert.AreEqual(o.MultY, r.Y);
@@ -98,11 +98,13 @@ namespace VectorLibTest
         {
             var v1 = new Vector(o.X1, o.Y1, o.Z1);
 
-            var r = v1.Divide(o.QUOTIENT);
+            var r = v1.Divide(o.Quotient);
 
-            Assert.AreEqual(o.DivX, r.X, 8);
-            Assert.AreEqual(o.DivY, r.Y, 8);
-            Assert.AreEqual(o.DivZ, r.Z, 8);
+            var delta = 0.00000001d;
+
+            Assert.AreEqual(o.DivX, r.X, delta);
+            Assert.AreEqual(o.DivY, r.Y, delta);
+            Assert.AreEqual(o.DivZ, r.Z, delta);
         }
 
         [TestMethod]
@@ -143,7 +145,7 @@ namespace VectorLibTest
 
             var angle = v1.AngleBetween(v2);
 
-            Assert.AreEqual(o.Angle, angle);
+            Assert.AreEqual(o.Angle, angle, 0.000001);
 
         }
 
