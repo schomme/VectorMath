@@ -50,12 +50,14 @@
 
         public override bool Equals(object? obj)
         {
-            if(obj is Vector v) return this.X == v.X && this.Y == v.Y && this.X == v.X;
+            if (obj == null) return false;
+            if (obj is Vector v) return this.GetHashCode() == v.GetHashCode();
             return false;
         }
+
         public override int GetHashCode()
-        {   //TODO: Hash Methode überarbeiten
-            return this._guid.GetHashCode();
+        {
+            return HashCode.Combine(this._guid, this.X, this.Y, this.Z);
         }
 
         #endregion
